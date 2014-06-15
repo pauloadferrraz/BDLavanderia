@@ -111,7 +111,7 @@ public class ServicoCrud {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 			transacao = sessao.beginTransaction();
-			consulta = sessao.createQuery("from Servico where codigo = :parametro");
+			consulta = sessao.createQuery("from Servico where cod_servico = :parametro");
 			consulta.setInteger("parametro", valor);
 			servico = (Servico) consulta.uniqueResult();
 			transacao.commit();

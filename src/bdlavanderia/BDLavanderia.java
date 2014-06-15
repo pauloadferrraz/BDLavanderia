@@ -24,33 +24,25 @@ public class BDLavanderia {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-
-        //Iniciarlizar Crud
+        
+        BDLavanderia bd = new BDLavanderia();
+        //bd.cadastrarClientes();
+        //bd.cadastrarPecas();
+        bd.cadastrarServico();
+        
+    }
+    
+    public void cadastrarClientes() {
+        
+        Cliente cliente = null;
         ClienteCrud clienteCrud = new ClienteCrud();
-        PecaCrud pecaCrud = new PecaCrud();
-        ServicoCrud serCrud = new ServicoCrud();
-
-
+        
         String[] nomes = {"Cliente 1 ", "Cliente 2", "Cliente 3"};
         String[] fones = {"(47) 3333-4444", "(47) 7777-5555", "(47) 9090-2525"};
         String[] emails = {"solanu@javapro.com.br", "lunare@javapro.com.br", "venusiana@javapro.com.br"};
         String[] endere = {"end cliente1", "end cliente2", "end cliente3"};
-
-        String[] tipo = {"camisa ", "bermuda", "calca jeans"};
-        String[] tamanho = {"P", "M", "G"};
-
-        Double[] valores = {10.5, 25.3, 32.2};
-
-
-        Peca peca = null;
-        Cliente cliente = null;
-        Servico servico = null;
-
-
+        
         for (int i = 0; i < nomes.length; i++) {
-
-            servico = new Servico();
             cliente = new Cliente();
             
             cliente.setNome(nomes[i]);
@@ -58,25 +50,50 @@ public class BDLavanderia {
             cliente.setEmail(emails[i]);
             cliente.setDataCadastro(new Date(System.currentTimeMillis()));
             cliente.setEndereco(endere[i]);
-
-            peca = new Peca();
-            peca.setTipo(tipo[i]);
-            peca.setTamanho(tamanho[i]);
-            peca.setCliente(cliente);
             
-            servico.setCliente(cliente);
+            clienteCrud.salvar(cliente);
+        }
+    }
+    
+    public void cadastrarPecas() {
+        Peca peca = null;
+        PecaCrud pecaCrud = new PecaCrud();
+        ClienteCrud clienteCrud = new ClienteCrud();
+        
+        String[] tipo = {"camisa", "bermuda", "calcajeans"};
+        String[] tamanho = {"P", "M", "G"};
+        
+        int b=0;
+        for (int j = 0; j < tipo.length; j++) {
+            b=j+1;
+            peca = new Peca();
+            peca.setTipo(tipo[j]);
+            peca.setTamanho(tamanho[j]);
+            System.out.println("b "+b);
+            peca.setCliente(clienteCrud.buscaCliente(b));
+            pecaCrud.salvar(peca);
+            
+        }
+    }
+    
+    public void cadastrarServico() {
+        Servico servico = null;
+        ServicoCrud serCrud = new ServicoCrud();
+        PecaCrud pecaCrud = new PecaCrud();
+        ClienteCrud clienteCrud = new ClienteCrud();
+        Double[] valores = {10.5, 25.3, 32.2};
+        
+        int b=0;
+        for (int c = 0; c < valores.length; c++) {
+            b=c+1;
+            servico = new Servico();
             servico.setDataEntrada(new Date(System.currentTimeMillis()));
             servico.setDataSaida(new Date(System.currentTimeMillis()));
-            servico.setValor(valores[i]);
-            servico.setPeca(peca);
-            
-            pecaCrud.salvar(peca);
-            clienteCrud.salvar(cliente);
+            servico.setValor(valores[c]);
+            System.out.println("Servico B "+b);
+            servico.setCliente(clienteCrud.buscaCliente(b));
+            servico.setPeca(pecaCrud.buscaPeca(b));
             serCrud.salvar(servico);
         }
-        System.out.println("Total de pecas cadastrados: " + pecaCrud.listar());
-        System.out.println("Total de servicos cadastrados: " + serCrud.listar());
-        System.out.println("Total de clientes cadastrados: " + clienteCrud.listar().size());
-
     }
 }

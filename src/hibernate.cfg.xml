@@ -19,7 +19,7 @@
 		<property name="c3po.idle_test_period">3000</property>
                 
                 <!-- Geraçao automatica das tabelas -->
-                <property name='hibernate.hbm2ddl.auto'>create</property>
+                <property name='hibernate.hbm2ddl.auto'>update</property>
 		
 		<!-- Configurações de debug -->
 		

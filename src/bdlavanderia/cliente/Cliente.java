@@ -6,17 +6,17 @@ package bdlavanderia.cliente;
 
 import bdlavanderia.peca.Peca;
 import bdlavanderia.servico.Servico;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -25,10 +25,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "clientes")
-public class Cliente {
+public class Cliente implements Serializable{
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator (name = "seq_cliente", sequenceName = "cliente_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO , generator="seq_cliente")
     @Column(name = "cod_cliente")
     private Integer cod_cliente;
     
@@ -50,6 +51,8 @@ public class Cliente {
     @OneToMany(mappedBy = "cod_peca")
     private List<Peca> pecas;
     
+    @OneToMany(mappedBy = "cod_servico")
+    private List<Servico> servicos;
 
     public Integer getCod_cliente() {
         return cod_cliente;
@@ -107,16 +110,25 @@ public class Cliente {
         this.pecas = pecas;
     }
 
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.cod_cliente);
-        hash = 79 * hash + Objects.hashCode(this.nome);
-        hash = 79 * hash + Objects.hashCode(this.telefone);
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.dataCadastro);
-        hash = 79 * hash + Objects.hashCode(this.endereco);
-        hash = 79 * hash + Objects.hashCode(this.pecas);
+        hash = 97 * hash + Objects.hashCode(this.cod_cliente);
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        hash = 97 * hash + Objects.hashCode(this.telefone);
+        hash = 97 * hash + Objects.hashCode(this.email);
+        hash = 97 * hash + Objects.hashCode(this.dataCadastro);
+        hash = 97 * hash + Objects.hashCode(this.endereco);
+        hash = 97 * hash + Objects.hashCode(this.pecas);
+        hash = 97 * hash + Objects.hashCode(this.servicos);
         return hash;
     }
 
@@ -150,7 +162,11 @@ public class Cliente {
         if (!Objects.equals(this.pecas, other.pecas)) {
             return false;
         }
+        if (!Objects.equals(this.servicos, other.servicos)) {
+            return false;
+        }
         return true;
     }
+    
     
 }

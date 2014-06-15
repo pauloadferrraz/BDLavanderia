@@ -1,7 +1,6 @@
 
 package bdlavanderia.cliente;
 
-import java.sql.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -97,7 +96,7 @@ public class ClienteCrud {
 		}
 	}
 	
-	public Cliente buscaContato(int valor) {
+	public Cliente buscaCliente(int valor) {
 		Cliente cliente = null;
 		Session sessao = null;
 		Transaction transacao = null;
@@ -106,13 +105,13 @@ public class ClienteCrud {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 			transacao = sessao.beginTransaction();
-			consulta = sessao.createQuery("from Cliente where codigo = :parametro");
+			consulta = sessao.createQuery("from Cliente where cod_cliente = :parametro");
 			consulta.setInteger("parametro", valor);
 			cliente = (Cliente) consulta.uniqueResult();
 			transacao.commit();
 			return cliente;
 		} catch (HibernateException e) {
-			System.out.println("N�o foi poss�vel buscar contato. Erro: " + e.getMessage());
+			System.out.println("N�o foi poss�vel buscar cliente. Erro: " + e.getMessage());
 		} finally {
 			try {
 				sessao.close();

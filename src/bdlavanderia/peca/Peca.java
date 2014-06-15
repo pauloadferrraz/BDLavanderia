@@ -5,13 +5,16 @@
 package bdlavanderia.peca;
 
 import bdlavanderia.cliente.Cliente;
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -21,10 +24,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pecas")
-public class Peca {
+public class Peca implements Serializable{
+    
     
     @Id
-    @GeneratedValue
+    @SequenceGenerator (name = "seq_pecas", sequenceName = "pecas_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO , generator="seq_pecas")
     @Column(name = "cod_peca")
     private Integer cod_peca;
     

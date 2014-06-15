@@ -111,7 +111,7 @@ public class PecaCrud {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 			transacao = sessao.beginTransaction();
-			consulta = sessao.createQuery("from Peca where codigo = :parametro");
+			consulta = sessao.createQuery("from Peca where cod_peca = :parametro");
 			consulta.setInteger("parametro", valor);
 			peca = (Peca) consulta.uniqueResult();
 			transacao.commit();
