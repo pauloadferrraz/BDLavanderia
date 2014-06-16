@@ -11,7 +11,6 @@ import bdlavanderia.peca.PecaCrud;
 import bdlavanderia.servico.Servico;
 import bdlavanderia.servico.ServicoCrud;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +27,8 @@ public class BDLavanderia {
         BDLavanderia bd = new BDLavanderia();
         //bd.cadastrarClientes();
         //bd.cadastrarPecas();
-        bd.cadastrarServico();
-        
+        //bd.cadastrarServico();
+        bd.buscarTodos();
     }
     
     public void cadastrarClientes() {
@@ -95,5 +94,23 @@ public class BDLavanderia {
             servico.setPeca(pecaCrud.buscaPeca(b));
             serCrud.salvar(servico);
         }
+    }
+    
+    
+    public void buscarTodos(){
+        Servico servico = null;
+        ServicoCrud serCrud = new ServicoCrud();
+        PecaCrud pecaCrud = new PecaCrud();
+        ClienteCrud clienteCrud = new ClienteCrud();
+        Double[] valores = {10.5, 25.3, 32.2};
+        
+        List<Servico> lista = serCrud.listar();
+        
+        System.out.println("Quantidade "+lista.size());
+        
+        for(Servico s : lista){
+            System.out.println("Cliente "+s.getCliente().getNome().toString());
+        }
+    
     }
 }
